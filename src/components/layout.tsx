@@ -8,7 +8,7 @@ const Layout = () => {
   return (
     <>
       <div className="bg-gradient-to-br from-violet-500 to-blue-400 h-screen flex justify-center items-center">
-        <Box bgcolor="white15" className="h-200 w-[20rem] p-6 text-amber-50">
+        <Box bgcolor="white15" className="h-150 w-[20rem] p-6 text-amber-50 overflow-auto">
           {/* Top Section */}
           <div className="flex text-[18px] justify-between">
             <div>city</div>
