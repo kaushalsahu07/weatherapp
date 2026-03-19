@@ -4,14 +4,32 @@ import Box from "./ui/box";
 import rainPng from "../assets/rain.png";
 import rainWebp from "../assets/rain.webp";
 
+import { useGeoCoding } from "../hooks/geocoding";
+import { useWeatherByCoords } from "../hooks/useWeather";
+
+
+
 const Layout = () => {
+  const { location } = useGeoCoding();
+  const { cityName } = useWeatherByCoords(
+    location.coords?.lat ?? null,
+    location.coords?.lon ?? null
+  );
+
+  const cityLabel = location.isLoading
+    ? "Detecting location..."
+    : location.error
+      ? "Location unavailable"
+      : (cityName ?? "Unknown city");
+
+      
   return (
     <>
       <div className="bg-gradient-to-br from-violet-500 to-blue-400 h-screen flex justify-center items-center">
         <Box bgcolor="white15" className="h-150 w-[20rem] p-6 text-amber-50 overflow-auto">
           {/* Top Section */}
           <div className="flex text-[18px] justify-between">
-            <div>city</div>
+            <div>{cityLabel}</div>
             <div>10:00 am</div>
           </div>
           {/* Weather Image */}

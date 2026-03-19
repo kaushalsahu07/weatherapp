@@ -1,3 +1,9 @@
+export interface coordinates {
+  lat: number,
+  lon: number
+}
+
+
 
 // weather condition
 export type WeatherCondition =
