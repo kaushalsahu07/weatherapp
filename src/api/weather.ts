@@ -1,21 +1,18 @@
-import { geoClient } from "./config";
-import { coordinates } from "./weather.types";
+import { weatherClient } from "./config";
+import { coordinates, WeatherData } from "./weather.types";
 
 class WeatherApi {
-    //Feacting the city name by using geocoding api
-     feactCityName = async ({lat, lon}: coordinates) => {
-        
-        const { data } = await geoClient.get("/reverse?", {
-            params: {lat,lon,limit: 1},
-        });
-        if(!data.length) throw new Error("Location not found!");
+  //Feacting the city name by using geocoding api
+  feactCityName = async ({ lat, lon }: coordinates) => {
+    const { data } = await weatherClient.get("/weather?", {
+      params: { lat, lon },
+    });
+    if (!data || typeof data.name !== "string" || !data.main) {
+      throw new Error("Weather data not found!");
+    }
 
-        return data[0].name;
-}
-
-
-
-
+    return data as WeatherData;
+  };
 }
 
 export const weatherApi = new WeatherApi();

@@ -1,3 +1,4 @@
+// Custom hook to get user's geolocation
 import { useEffect, useState } from "react";
 import { coordinates } from "../api/weather.types";
 
