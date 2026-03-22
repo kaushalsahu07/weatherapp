@@ -15,6 +15,18 @@ export interface WeatherData {
   weather: { main: WeatherCondition }[];
 }
 
+export interface ForecastListItem {
+  dt: number;
+  main: {
+    temp: number;
+  };
+  weather: { main: WeatherCondition }[];
+}
+
+export interface ForecastData {
+  list: ForecastListItem[];
+}
+
 // weather condition
 export type WeatherCondition =
   | "Clear"

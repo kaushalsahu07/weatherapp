@@ -1,6 +1,8 @@
 // Import necessary libraries and components
 import Weathericon from "./ui/weatherIcon";
 import Box from "./ui/box";
+import ForecastBox from "./ui/forecast"
+
 // Import weather icons for different conditions
 import rainPng from "../assets/rain.png";
 import rainWebp from "../assets/rain.webp";
@@ -18,6 +20,7 @@ import clearPng from "../assets/clear.png";
 import clearWebp from "../assets/clear.webp";
 import fogPng from "../assets/fog.png";
 import fogWebp from "../assets/fog.webp";
+
 // Import custom hooks for geocoding and weather data
 import { useGeoCoding } from "../hooks/geocoding";
 import { useWeatherByCoords } from "../hooks/useWeather";
@@ -123,16 +126,8 @@ const Layout = () => {
             </div>
           </div>
           {/* Forcast */}
-          <Box className="h-50 mt-4 py-5 px-2 gap-2 flex">
-
-            <div className="w-20 h-full grid text-center">
-              <h1>Monday</h1>
-              <Weathericon img={rainPng} imgWebp={rainWebp} className="w-20" />
-              <div className="text-2xl">
-                25 <span>°</span>
-              </div>
-            </div>
-            
+          <Box className="h-50 mt-4 py-5 px-2 gap-2 flex overflow-y-hidden">
+            <ForecastBox /> 
           </Box>
         </Box>
       </div>

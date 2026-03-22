@@ -1,10 +1,11 @@
 import { weatherApi } from "../api/weather";
 import { useQuery } from "@tanstack/react-query";
-import { coordinates } from "../api/weather.types";
+import { coordinates, ForecastData, WeatherData } from "../api/weather.types";
 
 // Define query keys for weather data based on coordinates
-export const weatherkey = {
+const weatherkey = {
     coords: ({lat, lon}: coordinates) => ["weather", "coords", lat, lon] as const,
+    forecast: ({lat, lon}: coordinates) => ["forecast", "coords", lat, lon] as const,
 }
 
 export const useWeatherByCoords = (
@@ -13,7 +14,7 @@ export const useWeatherByCoords = (
 ) => {
     const hasCoords = typeof lat === "number" && typeof lon === "number";
 
-    const getQuery = useQuery({
+    const getQuery = useQuery<WeatherData>({
         queryKey: hasCoords
             ? weatherkey.coords({ lat, lon })
             : ["weather", "coords", "pending"],
@@ -34,6 +35,34 @@ export const useWeatherByCoords = (
         condition: getQuery.data?.weather[0]?.main,
         windSpeed: getQuery.data?.wind.speed,
         humidity: getQuery.data?.main.humidity,
+        isLoading: getQuery.isLoading,
+        error: getQuery.error,
+    };
+};
+
+export const useForecastData = (
+    lat: number | null | undefined,
+    lon: number | null | undefined,
+) => {
+    const hasCoords = typeof lat === "number" && typeof lon === "number";
+
+    const getQuery = useQuery<ForecastData>({
+        queryKey: hasCoords
+            ? weatherkey.forecast({ lat, lon })
+            : ["forecast", "coords", "pending"],
+        queryFn: () => {
+            if (!hasCoords) {
+                throw new Error("Missing coordinates");
+            }
+
+            return weatherApi.feactForecast({ lat, lon });
+        },
+        enabled: hasCoords,
+    });
+
+    return {
+        data: getQuery.data,
+        list: getQuery.data?.list,
         isLoading: getQuery.isLoading,
         error: getQuery.error,
     };
