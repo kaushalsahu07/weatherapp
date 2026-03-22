@@ -24,4 +24,5 @@ export type WeatherCondition =
   | "Thunderstorm"
   | "Snow"
   | "Mist"
-  | "Fog";
+  | "Fog"
+  | "Smoke";

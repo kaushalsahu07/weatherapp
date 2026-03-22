@@ -1,5 +1,5 @@
 // Import necessary libraries and components
-import Weathericon from "../utils/weatherIcon";
+import Weathericon from "./ui/weatherIcon";
 import Box from "./ui/box";
 // Import weather icons for different conditions
 import rainPng from "../assets/rain.png";
@@ -21,6 +21,7 @@ import fogWebp from "../assets/fog.webp";
 // Import custom hooks for geocoding and weather data
 import { useGeoCoding } from "../hooks/geocoding";
 import { useWeatherByCoords } from "../hooks/useWeather";
+import { currentTime } from "../hooks/time";
 // Main layout component for the weather app
 const Layout = () => {
   const { location } = useGeoCoding();
@@ -35,6 +36,9 @@ const Layout = () => {
       ? "Location unavailable"
       : (cityName ?? "Unknown city");
 
+  // Getting time
+  const timeNow = currentTime();
+
   return (
     <>
       <div className="bg-gradient-to-br from-violet-500 to-blue-400 h-screen flex justify-center items-center">
@@ -45,10 +49,10 @@ const Layout = () => {
           {/* Top Section */}
           <div className="flex text-[18px] justify-between">
             <div>{cityLabel}</div>
-            <div>10:00 am</div>
+            <div>{timeNow}</div>
           </div>
           {/* Weather Image */}
-          <div className="grid justify-center mt-5 ">
+          <div className="grid justify-center mt-5">
             <Weathericon
               img={
                 condition === "Rain"
@@ -65,7 +69,7 @@ const Layout = () => {
                             ? clearPng
                             : condition === "Snow"
                             ? snowPng
-                            : condition === "Fog"
+                            : condition === "Fog" || "Smoke"
                             ? fogPng
                             : clearPng
               }
@@ -84,7 +88,7 @@ const Layout = () => {
                             ? clearWebp
                             : condition === "Snow"
                             ? snowWebp
-                            : condition === "Fog"
+                            : condition === "Fog" || "Smoke"
                             ? fogWebp
                             : clearWebp
               }
@@ -120,6 +124,7 @@ const Layout = () => {
           </div>
           {/* Forcast */}
           <Box className="h-50 mt-4 py-5 px-2 gap-2 flex">
+
             <div className="w-20 h-full grid text-center">
               <h1>Monday</h1>
               <Weathericon img={rainPng} imgWebp={rainWebp} className="w-20" />
@@ -127,20 +132,7 @@ const Layout = () => {
                 25 <span>°</span>
               </div>
             </div>
-            <div className="w-20 h-full grid text-center">
-              <h1>Monday</h1>
-              <Weathericon img={rainPng} imgWebp={rainWebp} className="w-20" />
-              <div className="text-2xl">
-                25 <span>°</span>
-              </div>
-            </div>
-            <div className="w-20 h-full grid text-center">
-              <h1>Monday</h1>
-              <Weathericon img={rainPng} imgWebp={rainWebp} className="w-20" />
-              <div className="text-2xl">
-                25 <span>°</span>
-              </div>
-            </div>
+            
           </Box>
         </Box>
       </div>
