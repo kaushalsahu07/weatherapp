@@ -1,30 +1,12 @@
 // Import necessary libraries and components
-import Weathericon from "./ui/weatherIcon";
+import Weathericon, { getWeatherIcons } from "./ui/weatherIcon";
 import Box from "./ui/box";
-import ForecastBox from "./ui/forecast"
-
-// Import weather icons for different conditions
-import rainPng from "../assets/rain.png";
-import rainWebp from "../assets/rain.webp";
-import cloudPng from "../assets/cloud.png";
-import cloudWebp from "../assets/cloud.webp";
-import snowPng from "../assets/snow.png";
-import snowWebp from "../assets/snow.webp";
-import thunderPng from "../assets/thunderstorm.png";
-import thunderWebp from "../assets/thunderstorm.webp";
-import mistPng from "../assets/mist.png";
-import mistWebp from "../assets/mist.webp";
-import drizzlePng from "../assets/drizzle.png";
-import drizzleWebp from "../assets/drizzle.webp";
-import clearPng from "../assets/clear.png";
-import clearWebp from "../assets/clear.webp";
-import fogPng from "../assets/fog.png";
-import fogWebp from "../assets/fog.webp";
+import ForecastBox from "./ui/forecast";
 
 // Import custom hooks for geocoding and weather data
 import { useGeoCoding } from "../hooks/geocoding";
 import { useWeatherByCoords } from "../hooks/useWeather";
-import { currentTime } from "../hooks/time";
+import { format } from "date-fns";
 // Main layout component for the weather app
 const Layout = () => {
   const { location } = useGeoCoding();
@@ -40,7 +22,10 @@ const Layout = () => {
       : (cityName ?? "Unknown city");
 
   // Getting time
-  const timeNow = currentTime();
+  const timeNow = format(new Date(), "h:mm a");
+
+  //Get weather icons based on condition
+  const { img, imgWebp } = getWeatherIcons(condition);
 
   return (
     <>
@@ -56,47 +41,7 @@ const Layout = () => {
           </div>
           {/* Weather Image */}
           <div className="grid justify-center mt-5">
-            <Weathericon
-              img={
-                condition === "Rain"
-                  ? rainPng
-                  : condition === "Clouds"
-                    ? cloudPng
-                    : condition === "Thunderstorm"
-                      ? thunderPng
-                      : condition === "Mist"
-                        ? mistPng
-                        : condition === "Drizzle"
-                          ? drizzlePng
-                          : condition === "Clear"
-                            ? clearPng
-                            : condition === "Snow"
-                            ? snowPng
-                            : condition === "Fog" || "Smoke"
-                            ? fogPng
-                            : clearPng
-              }
-              imgWebp={
-                condition === "Rain"
-                  ? rainWebp
-                  : condition === "Clouds"
-                    ? cloudWebp
-                    : condition === "Thunderstorm"
-                      ? thunderWebp
-                      : condition === "Mist"
-                        ? mistWebp
-                        : condition === "Drizzle"
-                          ? drizzleWebp
-                          : condition === "Clear"
-                            ? clearWebp
-                            : condition === "Snow"
-                            ? snowWebp
-                            : condition === "Fog" || "Smoke"
-                            ? fogWebp
-                            : clearWebp
-              }
-              className="w-55"
-            />
+            <Weathericon img={img} imgWebp={imgWebp} className="w-55" />
           </div>
           {/* Temp */}
           <div className="text-center temp">
@@ -127,7 +72,7 @@ const Layout = () => {
           </div>
           {/* Forcast */}
           <Box className="h-50 mt-4 py-5 px-2 gap-2 flex overflow-y-hidden">
-            <ForecastBox /> 
+            <ForecastBox />
           </Box>
         </Box>
       </div>

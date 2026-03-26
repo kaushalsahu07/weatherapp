@@ -16,14 +16,14 @@ class WeatherApi {
 
   feactForecast = async ({ lat, lon }: coordinates) => {
     const { data } = await weatherClient.get("/forecast?", {
-      params: {lat, lon},
+      params: { lat, lon },
     });
-        if (!data || !Array.isArray(data.list)) {
+    if (!data || !Array.isArray(data.list)) {
       throw new Error("Weather Forecast data not found!");
     }
 
-    return data as ForecastData
-  }
+    return data as ForecastData;
+  };
 }
 
 export const weatherApi = new WeatherApi();
