@@ -32,7 +32,7 @@ const Layout = () => {
       <div className="bg-gradient-to-br from-violet-500 to-blue-400 h-screen flex justify-center items-center">
         <Box
           bgcolor="white15"
-          className="h-150 w-[20rem] p-6 text-amber-50 overflow-auto"
+          className="md:h-150 h-full w-screen md:w-[20rem] p-6 text-amber-50 overflow-auto"
         >
           {/* Top Section */}
           <div className="flex text-[18px] justify-between">
@@ -40,15 +40,15 @@ const Layout = () => {
             <div>{timeNow}</div>
           </div>
           {/* Weather Image */}
-          <div className="grid justify-center mt-5">
+          <div className="my-5 h-55 m-auto grid place-items-center">
             <Weathericon img={img} imgWebp={imgWebp} className="w-55" />
           </div>
           {/* Temp */}
           <div className="text-center temp">
-            <span className="flex mx-10 text-[11rem] text-white leading-none">
-              {temp == null ? 0 : `${Math.round(temp)}`}{" "}
+            <h1 className="flex justify-center text-[11rem] text-white leading-none">
+              {temp == null ? 50 : `${Math.round(temp)}`}{" "}
               <span className="text-[50px]">°</span>
-            </span>
+            </h1>
             <div className="weather text-[2rem]">{condition}</div>
           </div>
           {/* Mid Section */}
