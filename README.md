@@ -1,73 +1,82 @@
-# React + TypeScript + Vite
+# WeatherApp TypeScript
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern weather application built with React, TypeScript, and Vite, featuring real-time weather data and forecasts.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React** - UI library for building interactive components
+- **TypeScript** - Type-safe JavaScript for better developer experience
+- **Vite** - Lightning-fast build tool and dev server
+- **Axios** - HTTP client for API requests
+- **React Query** - Powerful data fetching and caching library
 
-## React Compiler
+## Why Axios?
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Axios** is used for making HTTP requests to the weather API. Key benefits include:
 
-## Expanding the ESLint configuration
+- **Interceptors** - Request/response interceptors for centralized error handling and request transformation
+- **Request Cancellation** - Ability to cancel requests when components unmount, preventing memory leaks
+- **Timeout Support** - Built-in timeout handling for slow API responses
+- **Automatic Data Transformation** - Automatically transforms request and response data
+- **XSRF Protection** - Built-in Cross-Site Request Forgery token handling
+- **Promise-based API** - Clean, modern async/await syntax
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Why React Query?
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+**React Query** (TanStack Query) handles server state management and data synchronization. Key benefits include:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Automatic Caching** - Intelligent caching that reduces unnecessary API calls and improves performance
+- **Background Refetching** - Automatically refreshes stale data in the background while keeping the UI responsive
+- **Request Deduplication** - Multiple identical requests within milliseconds are batched into a single API call
+- **Automatic Retry Logic** - Built-in retry strategy for failed requests with exponential backoff
+- **Optimistic Updates** - Update the UI immediately while the request is in progress
+- **Minimal Boilerplate** - Eliminates manual loading/error state management
+- **DevTools** - Powerful debugging tools to inspect queries, cache, and request history
+- **Stale Time Management** - Configurable cache invalidation and garbage collection
+- **Pagination & Infinite Queries** - Built-in support for paginated and infinite scroll data
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Together, **Axios** and **React Query** create a robust, efficient data fetching solution that provides:
+
+✅ Better performance through intelligent caching  
+✅ Improved reliability with automatic retries and error handling  
+✅ Enhanced user experience with background updates and deduplication  
+✅ Reduced boilerplate code and complexity  
+✅ Superior debugging capabilities
+
+## Project Structure
+
+```
+src/
+├── api/
+│   ├── config.ts          # Axios instance configuration
+│   ├── weather.ts         # Weather API endpoints
+│   └── weather.types.ts   # TypeScript type definitions
+├── components/
+│   ├── layout.tsx         # Main layout component
+│   └── ui/
+│       ├── box.tsx        # Generic box component
+│       ├── forecast.tsx   # Forecast display component
+│       └── weatherIcon.tsx # Weather icon component
+├── hooks/
+│   ├── useWeather.ts      # React Query hook for weather data
+│   └── geocoding.ts       # Geocoding utility hook
+├── App.tsx                # Root app component
+└── main.tsx               # Application entry point
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+3. Build for production:
+   ```bash
+   npm run build
+   ```
