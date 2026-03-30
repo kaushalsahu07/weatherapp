@@ -3,6 +3,10 @@ export interface coordinates {
   lon: number;
 }
 
+export interface cityName {
+  q: string;
+}
+
 export interface WeatherData {
   name: string;
   main: {
