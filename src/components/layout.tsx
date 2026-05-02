@@ -2,6 +2,7 @@
 import Weathericon, { getWeatherIcons } from "./ui/weatherIcon";
 import Box from "./ui/box";
 import ForecastBox from "./ui/forecast";
+import Error from "./ui/error";
 
 // Import custom hooks for geocoding and weather data
 import { useGeoCoding } from "../hooks/geocoding";
@@ -35,17 +36,19 @@ const Layout = () => {
   // Use search results if available, otherwise use location-based weather
   const currentWeather = showSearch ? searchWeather : locationWeather;
 
+  const hasSearchError = (showSearch && searchWeather.error) || (location.error && !showSearch);
+
   const cityLabel = showSearch
     ? searchWeather.isLoading
       ? "Searching..."
       : searchWeather.error
         ? "City not found"
-        : (currentWeather.cityName ?? "Unknown city")
+        : (currentWeather.cityName)
     : location.isLoading
       ? "Detecting location..."
       : location.error
         ? "Location not found"
-        : (currentWeather.cityName ?? "Unknown city");
+        : (currentWeather.cityName);
 
   // Getting time
   const timeNow = format(new Date(), "h:mm a");
@@ -70,6 +73,14 @@ const Layout = () => {
               className="p-2 w-full rounded-2xl outline-none"
             />
           </Box>
+
+          <div style={{ display: hasSearchError ? 'block' : 'none' }}>
+            <Error />
+          </div>
+
+          {!hasSearchError && (
+          <div className="WeatherInfo">
+          
           {/* Top Section */}
           <div className="flex text-[18px] justify-between">
             <div>{cityLabel}</div>
@@ -124,6 +135,8 @@ const Layout = () => {
           <Box className="h-50 mt-4 py-5 px-2 gap-2 flex overflow-y-hidden">
             <ForecastBox />
           </Box>
+         </div>
+          )}
         </Box>
       </div>
     </>
