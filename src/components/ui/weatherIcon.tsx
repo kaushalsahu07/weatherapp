@@ -53,7 +53,7 @@ export default function Weathericon({ img, imgWebp, className }: Weathericon) {
     <>
       <picture>
         {imgWebp && <source srcSet={imgWebp} type="image/webp" />}
-        <img src={img} alt={img || "weather icon"} className={`${className}`} />
+        <img src={img} alt={img || "weather icon"} className={`${className}`} loading="lazy" decoding="async" />
       </picture>
     </>
   );
