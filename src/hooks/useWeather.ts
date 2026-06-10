@@ -5,7 +5,7 @@ import { coordinates, ForecastData, WeatherData } from "../api/weather.types";
 // Define query keys for weather data based on coordinates
 const weatherkey = {
     coords: ({lat, lon}: coordinates) => ["weather", "coords", lat, lon] as const,
-    forecast: ({lat, lon}: coordinates) => ["forecast", "coords", lat, lon] as const,
+    forecast: ({q}: {q: string}) => ["weather", "city", q] as const,
     city: ({q}: {q: string}) => ["weather", "city", q] as const,
 }
 
@@ -24,7 +24,7 @@ export const useWeatherByCoords = (
                 throw new Error("Missing coordinates");
             }
 
-            return weatherApi.feactCityName({ lat, lon });
+            return weatherApi.fetchCityName({ lat, lon });
         },
         enabled: hasCoords,
     });
@@ -42,21 +42,20 @@ export const useWeatherByCoords = (
 };
 
 export const useForecastData = (
-    lat: number | null | undefined,
-    lon: number | null | undefined,
+    q: string | null | undefined,
 ) => {
-    const hasCoords = typeof lat === "number" && typeof lon === "number";
+    const hasCoords = typeof q === "string";
 
     const getQuery = useQuery<ForecastData>({
         queryKey: hasCoords
-            ? weatherkey.forecast({ lat, lon })
+            ? weatherkey.forecast({ q })
             : ["forecast", "coords", "pending"],
         queryFn: () => {
             if (!hasCoords) {
                 throw new Error("Missing coordinates");
             }
 
-            return weatherApi.feactForecast({ lat, lon });
+            return weatherApi.fetchForecast({ q});
         },
         enabled: hasCoords,
     });
@@ -83,7 +82,7 @@ export const useSearchWeather = (
                 throw new Error("Missing city name");
             }
 
-            return weatherApi.feactByCityName({ q: cityName });
+            return weatherApi.fetchByCityName({ q: cityName });
         },
         enabled: hasCityName,
     });

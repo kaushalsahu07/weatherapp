@@ -1,13 +1,12 @@
 import { useForecastData } from "../../hooks/useWeather";
-import { useGeoCoding } from "../../hooks/geocoding";
-import WeatherIcon, { getWeatherIcons } from "./weatherIcon";
+import WeatherIcon from "./weatherIcon";
+import { getWeatherIcons } from "../../utils/weatherIconUtils";
+import { ForecastBoxProps } from "../../api/weather.types";
 import { format } from "date-fns";
 
-const ForecastBox = () => {
-  const { location } = useGeoCoding();
+const ForecastBox = ({ cityName }: ForecastBoxProps) => {
   const { list, isLoading, error } = useForecastData(
-    location.coords?.lat ?? null,
-    location.coords?.lon ?? null,
+    cityName ?? null,
   );
 
   if (isLoading) {

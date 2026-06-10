@@ -2,7 +2,9 @@ export interface coordinates {
   lat: number;
   lon: number;
 }
-
+export interface ForecastBoxProps {
+  cityName: string | null | undefined;
+}
 export interface cityName {
   q: string;
 }

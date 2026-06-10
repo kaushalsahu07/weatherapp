@@ -2,8 +2,8 @@ import { weatherClient } from "./config";
 import { coordinates, cityName, WeatherData, ForecastData } from "./weather.types";
 
 class WeatherApi {
-  //Feacting the city name by using geocoding api
-  feactCityName = async ({ lat, lon }: coordinates) => {
+  //Fetching the city name by using geocoding api
+  fetchCityName = async ({ lat, lon }: coordinates) => {
     const { data } = await weatherClient.get("/weather?", {
       params: { lat, lon},
     });
@@ -14,9 +14,9 @@ class WeatherApi {
     return data as WeatherData;
   };
 
-  feactForecast = async ({ lat, lon }: coordinates) => {
+  fetchForecast = async ({ q }: cityName) => {
     const { data } = await weatherClient.get("/forecast?", {
-      params: { lat, lon },
+      params: { q },
     });
     if (!data || !Array.isArray(data.list)) {
       throw new Error("Weather Forecast data not found!");
@@ -25,7 +25,7 @@ class WeatherApi {
     return data as ForecastData;
   };
 
-  feactByCityName = async ({q}: cityName ) => {
+  fetchByCityName = async ({q}: cityName ) => {
     const { data } = await weatherClient.get("/weather?", {
       params: {q},
     });

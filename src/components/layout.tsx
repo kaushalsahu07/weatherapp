@@ -1,5 +1,6 @@
 // Import necessary libraries and components
-import Weathericon, { getWeatherIcons } from "./ui/weatherIcon";
+import Weathericon from "./ui/weatherIcon";
+import { getWeatherIcons } from "../utils/weatherIconUtils";
 import Box from "./ui/box";
 import ForecastBox from "./ui/forecast";
 import Error from "./ui/error";
@@ -133,7 +134,7 @@ const Layout = () => {
           </div>
           {/* Forcast */}
           <Box className="h-50 mt-4 py-5 px-2 gap-2 flex overflow-y-hidden">
-            <ForecastBox />
+            <ForecastBox cityName={currentWeather.cityName} />
           </Box>
          </div>
           )}
