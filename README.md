@@ -2,18 +2,6 @@
 
 A modern, type-safe weather application built with React, TypeScript, and Vite. Get real-time weather data, forecasts, and location-based weather information with a responsive and intuitive user interface.
 
-<div>
-  <a href="#features">Features</a> •
-  <a href="#tech-stack">Tech Stack</a> •
-  <a href="#prerequisites">Prerequisites</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#project-structure">Project Structure</a> •
-  <a href="#development">Development</a> •
-  <a href="#deployment">Deployment</a> •
-  <a href="#contributing">Contributing</a> •
-  <a href="#contact">Contact</a>
-</div>
-
 ---
 
 ## Features
