@@ -1,0 +1,9 @@
+services:
+  weatherapp:
+    image: weatherapp:1.0 
+    ports:
+      - "5173:5173"
+    env_file: .env
+    volumes:
+      - .:/WEATHERAPP
+      - /WEATHERAPP/node_modules

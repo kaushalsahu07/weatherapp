@@ -88,6 +88,84 @@ Before you begin, ensure you have the following installed:
    npm run dev
    ```
 
+## Docker Setup
+
+**Prerequisites:** Docker & Docker Compose
+
+### Quick Start
+
+1. **Create `.env` file:**
+   ```bash
+   cp .env.example .env
+   ```
+
+2. **Add your API key:**
+   ```env
+   VITE_API_KEY=your_openweathermap_api_key_here
+   ```
+
+3. **Run:**
+   ```bash
+   docker compose up -d
+   ```
+
+Access at: `http://localhost:5173`
+
+### Build Options
+
+**Option 1: Build from Dockerfile (default)**
+```yaml
+# docker-compose.yml
+services:
+  weatherapp:
+    build: .  # Builds locally from Dockerfile
+    ports:
+      - "5173:5173"
+    env_file: .env
+    volumes:
+      - .:/WEATHERAPP
+      - /WEATHERAPP/node_modules
+```
+
+**Option 2: Use Pre-built Image**
+```yaml
+# docker-compose.yml
+services:
+  weatherapp:
+    image: kaushalsahu/weatherapp:1.0  # Replace with your image
+    ports:
+      - "5173:5173"
+    env_file: .env
+    volumes:
+      - .:/WEATHERAPP
+      - /WEATHERAPP/node_modules
+```
+
+Then run:
+```bash
+docker compose up -d
+```
+
+### Common Commands
+
+```bash
+docker compose up -d          # Start container
+docker compose logs -f        # View logs
+docker compose down           # Stop container
+docker compose down -v        # Stop & remove volumes
+docker compose up -d --build  # Rebuild & start
+```
+
+### Troubleshooting
+
+**Container won't start:**
+```bash
+docker compose logs weatherapp
+```
+
+**Port already in use:**
+Edit `docker-compose.yml` - change `5173` to another port (e.g., `5174`)
+
 ## Project Structure
 
 ```
